@@ -1,0 +1,21 @@
+server:
+  port: 8222
+
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true #使用服务发现路由
+      routes:
+        - id: service-acl #路由的id,没有规定规则但要求唯一,建议配合服务名
+          uri: lb://service-acl #匹配后提供服务的路由地址
+          predicates: # 断言，路径相匹配的进行路由
+            - Path=/*/cal/**
+
+
